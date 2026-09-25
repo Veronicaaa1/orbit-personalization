@@ -1,0 +1,5 @@
+condition:
+  name: fully_symmetric
+  graph: complete
+  assignment: fully_symmetric
+  lambda_source: spectral_matched_family_main

@@ -1,0 +1,4 @@
+graph:
+  name: complete
+  spectral_match_complete: true
+

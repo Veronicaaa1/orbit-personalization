@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "orbit-cifar10"
+version = "0.1.0"
+description = "Synchronous decentralized alignment experiments on MNIST and CIFAR-10"
+requires-python = ">=3.10"
+dynamic = ["dependencies"]
+
+[project.scripts]
+orbit-prepare-data = "orbit_cifar.cli.prepare_data:main"
+orbit-train = "orbit_cifar.cli.train:main"
+orbit-run-pilot = "orbit_cifar.cli.run_pilot:main"
+orbit-select-lambda = "orbit_cifar.cli.select_lambda:main"
+orbit-run-final = "orbit_cifar.cli.run_final:main"
+orbit-analyze = "orbit_cifar.cli.analyze:main"
+orbit-verify-run = "orbit_cifar.cli.verify_run:main"
+orbit-plan = "orbit_cifar.cli.plan:main"
+orbit-import-legacy = "orbit_cifar.cli.import_legacy:main"
+orbit-preflight = "orbit_cifar.cli.preflight:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra -p no:cacheprovider"
+filterwarnings = [
+  "ignore:Pandas requires version .*numexpr:UserWarning",
+  "ignore:Pandas requires version .*bottleneck:UserWarning",
+]

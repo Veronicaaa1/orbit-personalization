@@ -1,0 +1,6 @@
+condition:
+  name: no_communication
+  graph: blown_up_path
+  assignment: aligned
+  lambda_source: zero
+

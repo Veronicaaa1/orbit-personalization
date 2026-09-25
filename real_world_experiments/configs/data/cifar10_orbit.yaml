@@ -1,0 +1,15 @@
+data:
+  name: cifar10
+  root: real_world_experiments/data
+  download: true
+  split_seed: 2027
+  validation_per_class: 500
+  dataset_version: torchvision-cifar10
+  train_augmentation: true
+  input_channels: 3
+  input_height: 32
+  input_width: 32
+  num_classes: 10
+  class_names_source: torchvision
+  normalization_mean: [0.4914, 0.4822, 0.4465]
+  normalization_std: [0.2470, 0.2435, 0.2616]

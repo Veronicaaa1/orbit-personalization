@@ -1,0 +1,6 @@
+condition:
+  name: misaligned_data
+  graph: blown_up_path
+  assignment: misaligned
+  lambda_source: selected_main
+

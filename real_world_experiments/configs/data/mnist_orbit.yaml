@@ -1,0 +1,15 @@
+data:
+  name: mnist
+  root: real_world_experiments/data
+  download: true
+  split_seed: 2027
+  validation_per_class: 500
+  dataset_version: torchvision-mnist
+  train_augmentation: false
+  input_channels: 1
+  input_height: 28
+  input_width: 28
+  num_classes: 10
+  class_names_source: digits-0-9
+  normalization_mean: [0.1307]
+  normalization_std: [0.3081]

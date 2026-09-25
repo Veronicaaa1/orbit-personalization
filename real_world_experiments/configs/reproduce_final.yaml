@@ -1,0 +1,110 @@
+# New, independent reproduction; never the historical exported run identity.
+defaults:
+  - data: cifar10_orbit
+  - model: resnet20_gn
+  - graph: blown_up_path
+  - condition: main
+  - pilot: default
+  - analysis: default
+  - _self_
+
+experiment:
+  name: mnist_cifar10_reproduction_v1
+project_root: .
+output_root: reproduction/real_world/outputs
+report_root: reproduction/real_world/reports
+manifest_root: reproduction/real_world/manifests
+data:
+  root: reproduction/real_world/data
+  download: false
+device: auto
+deterministic: true
+seed: 1
+stage: final
+resume: false
+
+training:
+  epochs: 200
+  batch_size_per_node: 128
+  learning_rate: 0.05
+  momentum: 0.0
+  weight_decay: 0.0
+  warmup_epochs: 5
+  minimum_learning_rate: 0.0005
+  communication_every_steps: 1
+  diagnostics_every_steps: 100
+  graph_penalty_every_epochs: 1
+  label_smoothing: 0.0
+  gradient_clipping: null
+  mixed_precision: false
+  eval_every_epochs: 5
+  checkpoint_every_epochs: 5
+  num_workers: 1
+  persistent_workers: true
+  terminal_window_checkpoints: 5
+  decomposition_tolerance: 1.0e-9
+  ratio_threshold: 1.0e-14
+
+artifacts:
+  save_final_logits: true
+orbit_diagnostics:
+  enabled: true
+  schema_version: 1
+final:
+  datasets: [mnist, cifar10]
+  models: [resnet20_gn, mlp_ln]
+  conditions: [main, no_communication, misaligned_data, fully_symmetric]
+  seeds: [1, 2, 3]
+
+legacy_reuse:
+  enabled: true
+  source_root: null
+  allowed_dataset: cifar10
+  allowed_model: resnet20_gn
+  seeds: [1, 2, 3]
+  conditions: [main, no_communication, misaligned_data, fully_symmetric]
+  mode: copy_analysis_artifacts
+  on_missing: block
+  on_incompatible: block
+  allow_retrain: false
+  retrain_overrides:
+    - cifar10/resnet20_gn/main/seed_001
+    - cifar10/resnet20_gn/no_communication/seed_001
+    - cifar10/resnet20_gn/misaligned_data/seed_001
+    - cifar10/resnet20_gn/fully_symmetric/seed_001
+    - cifar10/resnet20_gn/main/seed_002
+    - cifar10/resnet20_gn/no_communication/seed_002
+    - cifar10/resnet20_gn/misaligned_data/seed_002
+    - cifar10/resnet20_gn/fully_symmetric/seed_002
+    - cifar10/resnet20_gn/main/seed_003
+    - cifar10/resnet20_gn/no_communication/seed_003
+    - cifar10/resnet20_gn/misaligned_data/seed_003
+    - cifar10/resnet20_gn/fully_symmetric/seed_003
+  rerun_pilot_family: true
+preflight:
+  seed: 0
+  training:
+    epochs: 1
+    warmup_epochs: 0
+    eval_every_epochs: 1
+    checkpoint_every_epochs: 1
+    terminal_window_checkpoints: 1
+    num_workers: 0
+    persistent_workers: false
+
+# Applied by scripts/reproduce_realworld.py, not by the generic CLI.
+reproduction:
+  archived_scope: mnist_cifar10_resnet_mlp_3seed
+  work_root: reproduction/real_world
+  family_training_overrides:
+    cifar10/mlp_ln:
+      num_workers: 0
+      persistent_workers: false
+  pilot_training_overrides:
+    num_workers: 1
+    persistent_workers: true
+  archived_manifest_sha256:
+    cifar10/balanced.json: 0a150bd37a0ebaf6ab8aa483661bd484e9251d263480e8c1e0225f1757c23b3e
+    cifar10/heterogeneous.json: 4768efde125309b51f06372c2d77c6b2b2b2e37b93474a1551b7f8ef221c3c33
+    mnist/balanced.json: f1f5d6ec59c0a182d75d968f3cd4f8f5ee015c977d5da9b5f8c267c9f060ee06
+    mnist/heterogeneous.json: e36a9186658e69151d166c75ec457b409a1d4164d0443f0526b8871226812813

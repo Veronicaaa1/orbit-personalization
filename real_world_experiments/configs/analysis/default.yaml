@@ -1,0 +1,6 @@
+analysis:
+  diagnostic_partitions: 10000
+  diagnostic_seed: 481516
+  figure_dpi: 180
+  reports_dir: reports
+

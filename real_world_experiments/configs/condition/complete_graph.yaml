@@ -1,0 +1,6 @@
+condition:
+  name: complete_graph
+  graph: complete
+  assignment: aligned
+  lambda_source: spectral_matched
+

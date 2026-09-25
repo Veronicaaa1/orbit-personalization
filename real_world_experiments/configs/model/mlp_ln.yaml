@@ -1,0 +1,11 @@
+model:
+  name: mlp_ln
+  input_channels: null
+  input_height: null
+  input_width: null
+  num_classes: null
+  hidden_dimensions: [256, 128]
+  group_norm_max_groups: 8
+  initialization_rho: 0.02
+  initialization_mode: relative_rms
+  absolute_scale_floor: 0.001

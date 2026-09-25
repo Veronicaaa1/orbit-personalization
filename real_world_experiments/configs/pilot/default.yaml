@@ -1,0 +1,9 @@
+pilot:
+  lambda_grid: [0.0, 0.03, 0.1, 0.3]
+  seeds: [0]
+  epochs: 80
+  eval_every_epochs: 5
+  terminal_window_checkpoints: 3
+  within_fraction_max: 0.75
+  between_fraction_min: 0.50
+  accuracy_drop_max: 0.03

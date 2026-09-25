@@ -1,0 +1,44 @@
+defaults:
+  - data: cifar10_orbit
+  - model: resnet20_gn
+  - graph: blown_up_path
+  - condition: main
+  - pilot: default
+  - analysis: default
+  - _self_
+
+project_root: .
+output_root: outputs
+manifest_path: real_world_experiments/data/split_manifest.json
+selected_hparams_path: outputs/pilot/selected_hparams.yaml
+device: auto
+deterministic: true
+seed: 0
+stage: final
+resume: false
+
+training:
+  epochs: 200
+  batch_size_per_node: 128
+  learning_rate: 0.05
+  momentum: 0.0
+  weight_decay: 0.0
+  warmup_epochs: 5
+  minimum_learning_rate: 0.0005
+  communication_every_steps: 1
+  diagnostics_every_steps: 100
+  graph_penalty_every_epochs: 1
+  label_smoothing: 0.0
+  gradient_clipping: null
+  mixed_precision: false
+  eval_every_epochs: 5
+  checkpoint_every_epochs: 5
+  num_workers: 2
+  persistent_workers: true
+  terminal_window_checkpoints: 5
+  decomposition_tolerance: 1.0e-9
+  ratio_threshold: 1.0e-14
+
+final:
+  seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  conditions: [main, no_communication, misaligned_data, complete_graph, large_communication]

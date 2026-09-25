@@ -1,0 +1,6 @@
+condition:
+  name: main
+  graph: blown_up_path
+  assignment: aligned
+  lambda_source: selected_main
+
