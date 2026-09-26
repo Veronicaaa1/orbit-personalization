@@ -23,7 +23,7 @@ Use Python **3.10 or later** with pip. Dependencies are listed in [requirements.
    python -m pip install -e real_world_experiments
    ```
 
-4. Download the complete results archive (`results.zip`) from this repository's [GitHub Releases](../../releases) and save it in `real_world_experiments/`. Skip this step if the complete `real_world_experiments/results/` directory is already available. The ZIP must contain a top-level `results/` directory. Run the following command from the project root:
+4. Download the complete results archive ([`results.zip`](real_world_experiments/results.zip)), and save it in `real_world_experiments/`. The archive is stored using Git LFS. If you cloned the repository, you can instead retrieve it by installing Git LFS and running `git lfs install` followed by `git lfs pull` from the project root. Skip this step if the complete `real_world_experiments/results/` directory is already available. The ZIP must contain a top-level `results/` directory. Run the following command from the project root:
 
    ```bash
    python -B -m zipfile -e real_world_experiments/results.zip real_world_experiments
