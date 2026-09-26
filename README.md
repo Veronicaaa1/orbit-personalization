@@ -1,4 +1,4 @@
-# Orbit-wise Personalization in Decentralized Learning under Compatible Data-Topology Automorphisms
+# Data-Topology Compatibility Enables Personalization in Decentralized Learning
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
