@@ -1,6 +1,8 @@
-# Orbit-wise Personalization: Experiments
+# Orbit-wise Personalization in Decentralized Learning under Compatible Data-Topology Automorphisms
 
-Code accompanying the paper **"Orbit-wise Personalization in Decentralized Learning under Data-Topology Automorphisms"**.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Code accompanying the paper **"Data-Topology Compatibility Enables Personalization in Decentralized Learning"** by Veronica Xu, Lingfei Wang, Chenlei Leng, Fengxiang He.
 
 ## Overview
 
@@ -85,3 +87,4 @@ This checks the supplied archive's integrity and result consistency and prints a
 | [real_world_experiments/scripts/](real_world_experiments/scripts/) | Training, verification and figure-generation entry points |
 | `real_world_experiments/results/` | Reduced result archive for all four combinations |
 | [real_world_experiments/tests/](real_world_experiments/tests/) | Test source files |
+
