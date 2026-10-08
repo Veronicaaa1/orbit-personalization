@@ -25,7 +25,7 @@ Use Python **3.10 or later** with pip. Dependencies are listed in [requirements.
    python -m pip install -e real_world_experiments
    ```
 
-4. Download the complete results archive ([`results.zip`](real_world_experiments/results.zip)), and save it in `real_world_experiments/`. The archive is stored using Git LFS. If you cloned the repository, you can instead retrieve it by installing Git LFS and running `git lfs install` followed by `git lfs pull` from the project root. Skip this step if the complete `real_world_experiments/results/` directory is already available. The ZIP must contain a top-level `results/` directory. Run the following command from the project root:
+4. Download the complete results archive ([`results.zip`](real_world_experiments/results.zip)), and save it in `real_world_experiments/`. Results are distributed only as this ZIP; the `results/` directory is created locally by extraction. The archive is stored using Git LFS. If you cloned the repository, you can instead retrieve it by installing Git LFS and running `git lfs install` followed by `git lfs pull` from the project root. Skip this step if you have already extracted the complete archive. The ZIP contains a top-level `results/` directory. Run the following command from the project root:
 
    ```bash
    python -B -m zipfile -e real_world_experiments/results.zip real_world_experiments
@@ -35,7 +35,7 @@ Use Python **3.10 or later** with pip. Dependencies are listed in [requirements.
 
 Run all subsequent commands from the project root.
 
-The results archive is required for real-data training, archive verification, and regenerating real-data figures and tables. Installation and numerical experiments do not require it. Keep the archive contents unchanged.
+Extract the results archive before real-data training, archive verification, or regenerating real-data figures and tables. Installation and numerical experiments do not require it. Keep the extracted archive contents unchanged.
 
 ## Run Experiments
 
@@ -79,12 +79,44 @@ This checks the supplied archive's integrity and result consistency and prints a
 
 ## Project Structure
 
-| Path | Contents |
-| --- | --- |
-| [numerical experiments/](numerical%20experiments/) | Numerical simulation and plotting code |
-| [real_world_experiments/src/](real_world_experiments/src/) | Data preparation, models, training and analysis |
-| [real_world_experiments/configs/](real_world_experiments/configs/) | Experiment configurations |
-| [real_world_experiments/scripts/](real_world_experiments/scripts/) | Training, verification and figure-generation entry points |
-| `real_world_experiments/results/` | Reduced result archive for all four combinations |
-| [real_world_experiments/tests/](real_world_experiments/tests/) | Test source files |
+```text
+orbit-personalization/
+├── numerical experiments/                      # Numerical simulations
+│   └── compatibility_experiments.py            # Quadratic/nonquadratic experiments and plots
+│
+└── real_world_experiments/                     # MNIST/CIFAR-10 experiments
+    ├── src/
+    │   └── orbit_cifar/                        # Python experiment package
+    │       ├── analysis/                       # Aggregation, plots, tables and reports
+    │       │   └── active/                     # Analysis for the current experiment matrix
+    │       ├── cli/                            # Command-line adapters
+    │       ├── data/                           # Dataset loading and node assignments
+    │       ├── evaluation/                     # Metrics, dispersion and orbit diagnostics
+    │       ├── experiments/                    # Pilot/final runs, selection and provenance
+    │       │   └── runner.py                   # Assemble and execute one experiment
+    │       ├── graph/                          # Communication topology and weights
+    │       ├── models/                         # Model construction and orbit initialization
+    │       │   ├── mlp_ln.py                   # MLP with layer normalization
+    │       │   └── resnet_gn.py                # ResNet20 with group normalization
+    │       ├── training/                       # Decentralized training and checkpoints
+    │       ├── utils/                          # I/O, logging and reproducibility helpers
+    │       ├── config_schema.py                # Configuration composition and validation
+    │       ├── constants.py                    # Shared experiment definitions
+    │       └── legacy.py                       # Import and validate earlier results
+    │
+    ├── configs/                                # Dataset, model, graph and experiment settings
+    │   └── reproduce_final.yaml                # Independent reproduction configuration
+    │
+    ├── scripts/                                # Experiment and verification entry points
+    │   ├── reproduce_realworld.py              # Run the full real-data experiment workflow
+    │   ├── reproduce_paper.py                  # Regenerate paper figures and tables
+    │   ├── plot_appendix_figures.py            # Plotting used by paper reproduction
+    │   └── verify_export.py                    # Verify supplied results
+    │
+    ├── data/                                   # Versioned data-split manifests
+    ├── results.zip                             # 4 dataset/model pairs, 48 final runs (Git LFS)
+    ├── tests/                                  # Training, analysis and verification tests
+    ├── pyproject.toml                          # Package metadata and orbit-* commands
+    └── requirements.txt                        # Python dependencies
+```
 
