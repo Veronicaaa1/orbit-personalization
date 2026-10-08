@@ -51,7 +51,7 @@ Outputs are saved under `reproduction/numerical/`, with figures in `figures/` an
 
 ### Real-Data Experiments
 
-Run all four combinations of MNIST/CIFAR-10 and MLP-LN/ResNet20-GN, using conditions `main`, `no_communication`, `misaligned_data` and `fully_symmetric`, with formal seeds **1, 2, 3**. The workflow includes data preparation, pilot runs, communication-coefficient selection, formal training, verification and analysis. Parameters are in [reproduce_final.yaml](real_world_experiments/configs/reproduce_final.yaml).
+Run all four combinations of MNIST/CIFAR-10 and MLP-LN/ResNet20-GN, using conditions `main`, `no_communication`, `misaligned_data` and `fully_symmetric`, with formal seeds **1, 2, 3**. This experiment matrix contains **48 final runs** (2 datasets × 2 model families × 4 conditions × 3 seeds). The workflow includes data preparation, pilot runs, communication-coefficient selection, formal training, verification and analysis. Parameters are in [reproduce_final.yaml](real_world_experiments/configs/reproduce_final.yaml).
 
 ```bash
 python -B real_world_experiments/scripts/reproduce_realworld.py --stage all --execute --download
@@ -78,45 +78,47 @@ python -B real_world_experiments/scripts/verify_export.py
 This checks the supplied archive's integrity and result consistency and prints a JSON report in the terminal.
 
 ## Project Structure
+The following tree highlights the main repository paths and selected implementation modules.
 
 ```text
 orbit-personalization/
-├── numerical experiments/                      # Numerical simulations
-│   └── compatibility_experiments.py            # Quadratic/nonquadratic experiments and plots
+├── numerical experiments/                 # Numerical simulations
+│   └── compatibility_experiments.py        # Quadratic/nonquadratic experiments and plots
 │
-└── real_world_experiments/                     # MNIST/CIFAR-10 experiments
+└── real_world_experiments/                 # MNIST/CIFAR-10 experiments
     ├── src/
-    │   └── orbit_cifar/                        # Python experiment package
-    │       ├── analysis/                       # Aggregation, plots, tables and reports
-    │       │   └── active/                     # Analysis for the current experiment matrix
-    │       ├── cli/                            # Command-line adapters
-    │       ├── data/                           # Dataset loading and node assignments
-    │       ├── evaluation/                     # Metrics, dispersion and orbit diagnostics
-    │       ├── experiments/                    # Pilot/final runs, selection and provenance
-    │       │   └── runner.py                   # Assemble and execute one experiment
-    │       ├── graph/                          # Communication topology and weights
-    │       ├── models/                         # Model construction and orbit initialization
-    │       │   ├── mlp_ln.py                   # MLP with layer normalization
-    │       │   └── resnet_gn.py                # ResNet20 with group normalization
-    │       ├── training/                       # Decentralized training and checkpoints
-    │       ├── utils/                          # I/O, logging and reproducibility helpers
-    │       ├── config_schema.py                # Configuration composition and validation
-    │       ├── constants.py                    # Shared experiment definitions
-    │       └── legacy.py                       # Import and validate earlier results
+    │   └── orbit_cifar/                   # Python experiment package
+    │       ├── analysis/                  # Aggregation, statistics, figures and tables
+    │       │   ├── active/                # Current experiment-matrix analysis
+    │       │   └── run.py                 # Analysis workflow selection
+    │       ├── cli/                       # Command-line interfaces
+    │       ├── data/                      # Dataset loading and node assignments
+    │       ├── evaluation/                # Metrics and orbit diagnostics
+    │       ├── experiments/               # Experiment execution and management
+    │       │   ├── matrix.py              # Experiment matrix and run paths
+    │       │   └── runner.py              # Single-experiment execution
+    │       ├── graph/                     # Communication topology and weights
+    │       ├── models/                    # Model architectures
+    │       │   ├── mlp_ln.py              # MLP with layer normalization
+    │       │   └── resnet_gn.py            # ResNet20 with group normalization
+    │       ├── training/                  # Decentralized training and checkpoints
+    │       ├── utils/                     # Logging and reproducibility helpers
+    │       ├── config_schema.py           # Configuration and validation
+    │       ├── constants.py               # Shared experiment definitions
+    │       └── legacy.py                  # Legacy result validation and import
     │
-    ├── configs/                                # Dataset, model, graph and experiment settings
-    │   └── reproduce_final.yaml                # Independent reproduction configuration
+    ├── configs/                           # Experiment configurations
+    │   └── reproduce_final.yaml           # Final-run reproduction configuration
     │
-    ├── scripts/                                # Experiment and verification entry points
-    │   ├── reproduce_realworld.py              # Run the full real-data experiment workflow
-    │   ├── reproduce_paper.py                  # Regenerate paper figures and tables
-    │   ├── plot_appendix_figures.py            # Plotting used by paper reproduction
-    │   └── verify_export.py                    # Verify supplied results
+    ├── scripts/                           # Reproduction and verification workflows
+    │   ├── reproduce_realworld.py         # Run real-data experiments
+    │   ├── reproduce_paper.py             # Regenerate paper figures and tables
+    │   ├── plot_appendix_figures.py       # Appendix figure generation
+    │   └── verify_export.py               # Verify supplied results
     │
-    ├── data/                                   # Versioned data-split manifests
-    ├── results.zip                             # 4 dataset/model pairs, 48 final runs (Git LFS)
-    ├── tests/                                  # Training, analysis and verification tests
-    ├── pyproject.toml                          # Package metadata and orbit-* commands
-    └── requirements.txt                        # Python dependencies
+    ├── data/                              # Versioned data-split manifests
+    ├── results.zip                        # 48 final runs across 4 dataset/model pairs (Git LFS)
+    ├── tests/                             # Training, analysis and verification tests
+    ├── pyproject.toml                     # Package installation and CLI entry points
+    └── requirements.txt                   # Python dependencies
 ```
-
